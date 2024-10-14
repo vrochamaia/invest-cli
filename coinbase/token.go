@@ -5,6 +5,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
+	"investcli/utils"
 	"math"
 	"math/big"
 	"time"
@@ -18,10 +19,14 @@ type APIKeyClaims struct {
 	URI string `json:"uri"`
 }
 
-func buildJWT(uri string) (string, error) {
-	apiKey := fetchApiKeyFromSecrets()
+type coingbaseApiKey struct {
+	ApiKeys utils.ApiKeys `json:"coinbase"`
+}
 
-	block, _ := pem.Decode([]byte(apiKey.KeySecret))
+func buildJWT(uri string) (string, error) {
+	apiKey := utils.GetDataFromJson[coingbaseApiKey]("./secrets.json").ApiKeys
+
+	block, _ := pem.Decode([]byte(apiKey.PrivateKey))
 	if block == nil {
 		return "", fmt.Errorf("jwt: Could not decode private key")
 	}
@@ -33,7 +38,7 @@ func buildJWT(uri string) (string, error) {
 
 	sig, err := jose.NewSigner(
 		jose.SigningKey{Algorithm: jose.ES256, Key: key},
-		(&jose.SignerOptions{NonceSource: nonceSource{}}).WithType("JWT").WithHeader("kid", apiKey.KeyName),
+		(&jose.SignerOptions{NonceSource: nonceSource{}}).WithType("JWT").WithHeader("kid", apiKey.Key),
 	)
 	if err != nil {
 		return "", fmt.Errorf("jwt: %w", err)
@@ -41,7 +46,7 @@ func buildJWT(uri string) (string, error) {
 
 	cl := &APIKeyClaims{
 		Claims: &jwt.Claims{
-			Subject:   apiKey.KeyName,
+			Subject:   apiKey.Key,
 			Issuer:    "coinbase-cloud",
 			NotBefore: jwt.NewNumericDate(time.Now()),
 			Expiry:    jwt.NewNumericDate(time.Now().Add(2 * time.Minute)),

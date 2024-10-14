@@ -3,7 +3,9 @@ package coinbase
 import (
 	"encoding/json"
 	"fmt"
+	"investcli/coinconvert"
 	"os"
+	"strconv"
 )
 
 const (
@@ -34,6 +36,28 @@ func formatResponse(input string) []CoinbaseAccount {
 		panic(error)
 	}
 
+	accountsMap := make(map[string]float64)
+	CADTotalAmount := 0.0
+
+	for _, account := range result.Accounts {
+		accountBalance, _ := strconv.ParseFloat(account.AvailableBalance.Value, 64)
+
+		if accountBalance > 0 {
+			CADAmount := coinconvert.CoinConvert(coinconvert.CoinConvertInput{FromCurrency: account.Currency, ToCurrency: "CAD", Amount: accountBalance})
+
+			accountsMap[account.Currency] = CADAmount
+
+			CADTotalAmount += CADAmount
+		}
+	}
+
+	for key, value := range accountsMap {
+		fmt.Println(key, fmt.Sprintf("CA$ %.2f", value), "| %", fmt.Sprintf("%.2f", value/CADTotalAmount*100))
+		fmt.Println("")
+	}
+
+	fmt.Println("Total amount", fmt.Sprintf("CA$ %.2f", CADTotalAmount))
+
 	return result.Accounts
 }
 
@@ -48,10 +72,7 @@ func Accounts(isDevelopment bool) {
 		accounts = string(jsonFile)
 	} else {
 		accounts = Get(GetRequestInput{RequestHost: requestHost, RequestPath: requestPath})
-
 	}
 
-	formattedResponse := formatResponse(accounts)
-
-	fmt.Println(formattedResponse)
+	formatResponse(accounts)
 }
