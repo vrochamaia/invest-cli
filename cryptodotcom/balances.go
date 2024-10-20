@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"investcli/coin"
 	"investcli/http"
+	"investcli/utils"
 	"os"
 	"strconv"
 	"time"
@@ -50,10 +51,10 @@ func parseResponse(input string) []coin.Balance {
 	return coinBalances
 }
 
-func Balances(isDevelopment bool) []coin.Balance {
+func Balances() []coin.Balance {
 	var response string
 
-	if isDevelopment {
+	if utils.IsTestEnv() {
 		fmt.Println("Using Crypto.com mock data...")
 
 		jsonFile, _ := os.ReadFile("./cryptodotcom-example.json")

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"investcli/coin"
+	"investcli/utils"
 	"os"
 	"strconv"
 )
@@ -47,11 +48,11 @@ func parseResponse(input string) []coin.Balance {
 	return coinBalances
 }
 
-func Balances(isDevelopment bool) []coin.Balance {
+func Balances() []coin.Balance {
 
 	var accounts string
 
-	if isDevelopment {
+	if utils.IsTestEnv() {
 		fmt.Println("Using Coinbase mock data...")
 
 		jsonFile, _ := os.ReadFile("./coinbase-example.json")
