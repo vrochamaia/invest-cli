@@ -10,7 +10,7 @@ type Balance struct {
 	AvailableBalance float64
 }
 
-func CalculateProportionBetweenBalances(balances []Balance) {
+func CalculateProportionAmongBalances(balances []Balance) {
 	accountsMap := make(map[string]float64)
 	CADTotalAmount := 0.0
 

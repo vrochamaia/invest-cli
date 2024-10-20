@@ -10,7 +10,7 @@ import (
 var rootCommand = &cobra.Command{
 	Use:   "investcli",
 	Short: "investcli helps you get information about your investments",
-	Long:  "investcli helps you get information about your investments. It currently integrates with Coinbase only.",
+	Long:  "investcli helps you get information about your investments. It currently integrates with Coinbase and Crypto.com only.",
 	Run: func(cmd *cobra.Command, args []string) {
 	},
 }

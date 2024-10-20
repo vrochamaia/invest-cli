@@ -47,7 +47,7 @@ func parseResponse(input string) []coin.Balance {
 	return coinBalances
 }
 
-func Accounts(isDevelopment bool) []coin.Balance {
+func Balances(isDevelopment bool) []coin.Balance {
 
 	var accounts string
 
