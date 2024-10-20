@@ -1,9 +1,7 @@
 package main
 
-import "investcli/cryptodotcom"
+import "investcli/cmd"
 
 func main() {
-	// cmd.Execute()
-
-	cryptodotcom.Accounts()
+	cmd.Execute()
 }

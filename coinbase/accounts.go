@@ -3,7 +3,7 @@ package coinbase
 import (
 	"encoding/json"
 	"fmt"
-	"investcli/coinconvert"
+	"investcli/coin"
 	"os"
 	"strconv"
 )
@@ -27,7 +27,7 @@ type CoinbaseAccounts struct {
 	Accounts []CoinbaseAccount `json:"accounts"`
 }
 
-func formatResponse(input string) []CoinbaseAccount {
+func parseResponse(input string) []coin.Balance {
 	var result CoinbaseAccounts
 
 	error := json.Unmarshal([]byte(input), &result)
@@ -36,43 +36,29 @@ func formatResponse(input string) []CoinbaseAccount {
 		panic(error)
 	}
 
-	accountsMap := make(map[string]float64)
-	CADTotalAmount := 0.0
+	var coinBalances []coin.Balance
 
 	for _, account := range result.Accounts {
-		accountBalance, _ := strconv.ParseFloat(account.AvailableBalance.Value, 64)
+		parsedBalance, _ := strconv.ParseFloat(account.AvailableBalance.Value, 64)
 
-		if accountBalance > 0 {
-			CADAmount := coinconvert.CoinConvert(coinconvert.CoinConvertInput{FromCurrency: account.Currency, ToCurrency: "CAD", Amount: accountBalance})
-
-			accountsMap[account.Currency] = CADAmount
-
-			CADTotalAmount += CADAmount
-		}
+		coinBalances = append(coinBalances, coin.Balance{Currency: account.Currency, AvailableBalance: parsedBalance})
 	}
 
-	for key, value := range accountsMap {
-		fmt.Println(key, fmt.Sprintf("CA$ %.2f", value), "| %", fmt.Sprintf("%.2f", value/CADTotalAmount*100))
-		fmt.Println("")
-	}
-
-	fmt.Println("Total amount", fmt.Sprintf("CA$ %.2f", CADTotalAmount))
-
-	return result.Accounts
+	return coinBalances
 }
 
-func Accounts(isDevelopment bool) {
+func Accounts(isDevelopment bool) []coin.Balance {
 
 	var accounts string
 
 	if isDevelopment {
-		fmt.Println("Using mock data...")
+		fmt.Println("Using Coinbase mock data...")
 
-		jsonFile, _ := os.ReadFile("./payloadexample.json")
+		jsonFile, _ := os.ReadFile("./coinbase-example.json")
 		accounts = string(jsonFile)
 	} else {
 		accounts = Get(GetRequestInput{RequestHost: requestHost, RequestPath: requestPath})
 	}
 
-	formatResponse(accounts)
+	return parseResponse(accounts)
 }

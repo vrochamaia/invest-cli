@@ -26,8 +26,10 @@ func authenticationToken(input authenticationTokenInput) string {
 }
 
 func Get(input GetRequestInput) string {
-	token := authenticationToken(authenticationTokenInput{requestHost: input.RequestHost,
-		requestPath: input.RequestPath, requestMethod: "GET"})
+	requestMethod := "GET"
 
-	return http.Request(http.RequestInput{RequestHost: input.RequestHost, RequestPath: input.RequestPath, Headers: map[string]string{"Authorization": "Bearer " + token}})
+	token := authenticationToken(authenticationTokenInput{requestHost: input.RequestHost,
+		requestPath: input.RequestPath, requestMethod: requestMethod})
+
+	return http.Request(http.RequestInput{RequestMethod: requestMethod, RequestHost: input.RequestHost, RequestPath: input.RequestPath, Headers: map[string]string{"Authorization": "Bearer " + token}})
 }
