@@ -1,0 +1,56 @@
+{
+  "id": 10,
+  "method": "private/user-balance",
+  "code": 0,
+  "result": {
+    "data": [
+      {
+        "total_available_balance": "245.93731807",
+        "total_margin_balance": "273.26368674",
+        "total_initial_margin": "27.32636868",
+        "total_haircut": "27.32636868",
+        "total_position_im": "0",
+        "total_maintenance_margin": "13.66318434",
+        "total_position_cost": "0",
+        "total_cash_balance": "273.26368674",
+        "total_collateral_value": "245.93731807",
+        "total_session_unrealized_pnl": "0",
+        "instrument_name": "USD",
+        "total_session_realized_pnl": "0",
+        "position_balances": [
+          {
+            "quantity": "0.00413648",
+            "reserved_qty": "0",
+            "collateral_amount": "245.93731807",
+            "haircut": "0.1",
+            "collateral_eligible": true,
+            "market_value": "273.26368674",
+            "max_withdrawal_balance": "0.00413648",
+            "instrument_name": "BTC",
+            "hourly_interest_rate": "0"
+          },
+          {
+            "quantity": "12.98173979",
+            "reserved_qty": "0",
+            "collateral_amount": "245.93731807",
+            "haircut": "0.1",
+            "collateral_eligible": true,
+            "market_value": "273.26368674",
+            "max_withdrawal_balance": "0.00413648",
+            "instrument_name": "PENDLE",
+            "hourly_interest_rate": "0"
+          }
+        ],
+        "credit_limits": [],
+        "total_effective_leverage": "1",
+        "position_limit": "5465.27373494",
+        "used_position_limit": "273.26368675",
+        "total_borrow": "0",
+        "margin_score": "0",
+        "is_liquidating": false,
+        "has_risk": false,
+        "terminatable": true
+      }
+    ]
+  }
+}

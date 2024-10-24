@@ -57,7 +57,7 @@ func Balances() []coin.Balance {
 	if utils.IsTestEnv() {
 		fmt.Println("Using Crypto.com mock data...")
 
-		jsonFile, _ := os.ReadFile("./cryptodotcom-example.json")
+		jsonFile, _ := os.ReadFile("./cryptodotcom-mock-data.json")
 		response = string(jsonFile)
 	} else {
 		requestBody := signRequest(map[string]interface{}{

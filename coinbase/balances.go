@@ -55,7 +55,7 @@ func Balances() []coin.Balance {
 	if utils.IsTestEnv() {
 		fmt.Println("Using Coinbase mock data...")
 
-		jsonFile, _ := os.ReadFile("./coinbase-example.json")
+		jsonFile, _ := os.ReadFile("./coinbase-mock-data.json")
 		accounts = string(jsonFile)
 	} else {
 		accounts = Get(GetRequestInput{RequestHost: requestHost, RequestPath: requestPath})

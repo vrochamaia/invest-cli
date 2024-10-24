@@ -16,7 +16,6 @@ var balancesCommand = &cobra.Command{
 	Short:   "Fetch available balances from your Crypto Accounts and calculate weigth of which coin regarding total value of assets.",
 	Args:    cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-
 		var appEnv string
 
 		if isDevelopment {
