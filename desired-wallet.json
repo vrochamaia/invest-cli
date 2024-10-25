@@ -1,21 +1,19 @@
 {
-  "currencies": [
-    { "currency": "BTC", "percentage": 40 },
-    { "currency": "SOL", "percentage": 14 },
-    { "currency": "ETH", "percentage": 10 },
-    { "currency": "PENDLE", "percentage": 5 },
-    { "currency": "AAVE", "percentage": 3 },
-    { "currency": "AKT", "percentage": 2 },
-    { "currency": "STX", "percentage": 2 },
-    { "currency": "LINK", "percentage": 2 },
-    { "currency": "MKR", "percentage": 2 },
-    { "currency": "ONDO", "percentage": 2 },
-    { "currency": "RENDER", "percentage": 2 },
-    { "currency": "RUNE", "percentage": 2 },
-    { "currency": "TON", "percentage": 2 },
-    { "currency": "UNI", "percentage": 2 },
-    { "currency": "AERO", "percentage": 2 },
-    { "currency": "IMX", "percentage": 2 },
-    { "currency": "RON", "percentage": 1 }
-  ]
+  "BTC": 40,
+  "SOL": 14,
+  "ETH": 10,
+  "PENDLE": 5,
+  "AAVE": 3,
+  "AKT": 2,
+  "STX": 2,
+  "LINK": 2,
+  "MKR": 2,
+  "ONDO": 2,
+  "RENDER": 2,
+  "RUNE": 2,
+  "TON": 2,
+  "UNI": 2,
+  "AERO": 2,
+  "IMX": 2,
+  "RON": 1
 }
