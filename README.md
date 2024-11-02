@@ -2,6 +2,8 @@ This CLI powered by [Cobra](https://github.com/spf13/cobra) aims to provide an e
 
 The only supported feature for now grabs all of your crypto tokens from those two exchanges, convert them to Canadian Dollars, and returns their weights in relation to the total wallet balance.
 
+_TODO: Leave a screenshot of what it look like_
+
 ## Set up
 
 ### Clone the repository
@@ -69,7 +71,8 @@ You also have to option to install the CLI in your local machine by doing the fo
 
 _TODO_
 
-## Limitations
+## Disclaimers
 
 - The dollar values that you see printed out are all in Canadian dollars.
 - For brand new crypto tokens the [API](https://coinconvert.net/) that converts them to the fiat currency might take a couple weeks to be updated.
+- For the Golang experts, I know that I abused on the usage of `panic()` in this project. If this was a commercial or professional application I would have done things differently and handle those errors more elegantly.
