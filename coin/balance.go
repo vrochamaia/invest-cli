@@ -53,7 +53,7 @@ func CalculateProportionAmongBalances(balances []Balance) {
 		desiredMinusCurrentWeight := float64(desiredWeight) - currentWeight
 		valueRequiredToBalance := (desiredMinusCurrentWeight * CADTotalAmount) / 100
 
-		fmt.Println(key, fmt.Sprintf("$ %.2f", value), "|", fmt.Sprintf("Current Weigth: %.2f", currentWeight), "%", "|", fmt.Sprintf("Desired weigth: %.2f", desiredWeight), "%", "|", fmt.Sprintf("Required value to balance: $ %.2f", valueRequiredToBalance))
+		fmt.Println(key, fmt.Sprintf("$ %.2f", value), "|", fmt.Sprintf("Current Weigth: %.2f", currentWeight), "%", "|", fmt.Sprintf("Desired weigth: %.2f", desiredWeight), "%", "|", fmt.Sprintf("Required value to ideal balance: $ %.2f", valueRequiredToBalance))
 		fmt.Println("")
 	}
 

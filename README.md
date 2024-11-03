@@ -2,7 +2,7 @@ This CLI powered by [Cobra](https://github.com/spf13/cobra) aims to provide an e
 
 The only supported feature for now grabs all of your crypto tokens from those two exchanges, convert them to Canadian Dollars, and returns their weights in relation to the total wallet balance.
 
-_TODO: Leave a screenshot of what it look like_
+![Command Output Screenshot](./command-output.png)
 
 ## Set up
 
@@ -65,11 +65,27 @@ You can also pass a development flag that will use mock data from local `.json` 
 go run main.go balances -D
 ```
 
-#### Installing the CLI
+#### Building the code into an executable file
 
-You also have to option to install the CLI in your local machine by doing the following
+Wit the following command in the root directory you can build the code
 
-_TODO_
+```
+go build
+```
+
+That should create a `investcli` executable file for your current platform (MacOS, Windows, Linux). You can then create an alias for that file into your bash file to easily invoke the command anywhere in your terminal.
+
+```
+// .zshrc file or similar
+
+alias investcli = 'path/to/the/file/investcli'
+```
+
+Now from your terminal you can simply do
+
+```
+investcli balances
+```
 
 ## Disclaimers
 
