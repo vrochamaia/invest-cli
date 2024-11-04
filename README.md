@@ -35,6 +35,11 @@ secrets.json
 
 If you don't use one of the those exchanges you can just omit the respective object.
 
+You can find more details on how to generate those keys from the Coinbase and Crypto.com API docs.
+
+- [Coinbase](https://docs.cdp.coinbase.com/coinbase-app/docs/quickstart)
+- [Crypto.com](https://exchange-docs.crypto.com/exchange/v1/rest-ws/index.html?javascript#generating-the-api-key)
+
 ### Configure the desired wallet file (optional)
 
 If you want to compare the current weight of each token of your wallet against what you expect their weights to be, you can fill out the `desired-wallet.json` file with the expected weight of each token.
