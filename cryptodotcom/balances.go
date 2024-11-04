@@ -52,35 +52,34 @@ func parseResponse(input string) []coin.Balance {
 }
 
 func Balances() []coin.Balance {
-	var response string
-
 	if utils.IsTestEnv() {
 		fmt.Println("Using Crypto.com mock data...")
 
 		jsonFile, _ := os.ReadFile("./cryptodotcom-mock-data.json")
-		response = string(jsonFile)
-	} else {
-		requestBody, error := signRequest(map[string]interface{}{
-			"id":     10,
-			"method": "private/user-balance",
-			"params": map[string]interface{}{},
-			"nonce":  time.Now().UnixMilli(),
-		})
 
-		if error != nil {
-			fmt.Println("Error signing Crypto.com request: ", error)
-
-			return []coin.Balance{}
-		}
-
-		response = http.Request(http.RequestInput{
-			RequestHost:   "api.crypto.com",
-			RequestMethod: "POST",
-			RequestPath:   "/exchange/v1/private/user-balance",
-			Body:          requestBody,
-			Headers:       map[string]string{"Content-Type": "application/json"},
-		})
+		return parseResponse(string(jsonFile))
 	}
+
+	requestBody, error := signRequest(map[string]interface{}{
+		"id":     10,
+		"method": "private/user-balance",
+		"params": map[string]interface{}{},
+		"nonce":  time.Now().UnixMilli(),
+	})
+
+	if error != nil {
+		fmt.Println("Error signing Crypto.com request: ", error)
+
+		return []coin.Balance{}
+	}
+
+	response := http.Request(http.RequestInput{
+		RequestHost:   "api.crypto.com",
+		RequestMethod: "POST",
+		RequestPath:   "/exchange/v1/private/user-balance",
+		Body:          requestBody,
+		Headers:       map[string]string{"Content-Type": "application/json"},
+	})
 
 	return parseResponse(response)
 }

@@ -65,28 +65,26 @@ func parseResponse(input string) []coin.Balance {
 }
 
 func Balances() []coin.Balance {
-
-	var accounts string
-
 	if utils.IsTestEnv() {
 		fmt.Println("Using Coinbase mock data...")
 
 		jsonFile, _ := os.ReadFile("./coinbase-mock-data.json")
-		accounts = string(jsonFile)
-	} else {
-		requestMethod := "GET"
 
-		token, error := authenticationToken(authenticationTokenInput{requestHost: requestHost,
-			requestPath: requestPath, requestMethod: requestMethod})
-
-		if error != nil {
-			fmt.Println("Error while getting Coinbase authentication token: ", error)
-
-			return []coin.Balance{}
-		}
-
-		accounts = http.Request(http.RequestInput{RequestMethod: requestMethod, RequestHost: requestHost, RequestPath: requestPath, Headers: map[string]string{"Authorization": "Bearer " + token}})
+		return parseResponse(string(jsonFile))
 	}
+
+	requestMethod := "GET"
+
+	token, error := authenticationToken(authenticationTokenInput{requestHost: requestHost,
+		requestPath: requestPath, requestMethod: requestMethod})
+
+	if error != nil {
+		fmt.Println("Error while getting Coinbase authentication token: ", error)
+
+		return []coin.Balance{}
+	}
+
+	accounts := http.Request(http.RequestInput{RequestMethod: requestMethod, RequestHost: requestHost, RequestPath: requestPath, Headers: map[string]string{"Authorization": "Bearer " + token}})
 
 	return parseResponse(accounts)
 }
