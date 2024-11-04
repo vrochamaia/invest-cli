@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"investcli/coin"
+	"investcli/http"
 	"investcli/utils"
 	"os"
 	"strconv"
@@ -26,6 +27,21 @@ type CoinbaseAccount struct {
 
 type CoinbaseAccounts struct {
 	Accounts []CoinbaseAccount `json:"accounts"`
+}
+
+type authenticationTokenInput struct {
+	requestHost   string
+	requestPath   string
+	requestMethod string
+}
+
+func authenticationToken(input authenticationTokenInput) (string, error) {
+
+	uri := fmt.Sprintf("%s %s%s", input.requestMethod, input.requestHost, input.requestPath)
+
+	jwtToken, error := buildJWT(uri)
+
+	return jwtToken, error
 }
 
 func parseResponse(input string) []coin.Balance {
@@ -58,7 +74,18 @@ func Balances() []coin.Balance {
 		jsonFile, _ := os.ReadFile("./coinbase-mock-data.json")
 		accounts = string(jsonFile)
 	} else {
-		accounts = Get(GetRequestInput{RequestHost: requestHost, RequestPath: requestPath})
+		requestMethod := "GET"
+
+		token, error := authenticationToken(authenticationTokenInput{requestHost: requestHost,
+			requestPath: requestPath, requestMethod: requestMethod})
+
+		if error != nil {
+			fmt.Println("Error while getting Coinbase authentication token: ", error)
+
+			return []coin.Balance{}
+		}
+
+		accounts = http.Request(http.RequestInput{RequestMethod: requestMethod, RequestHost: requestHost, RequestPath: requestPath, Headers: map[string]string{"Authorization": "Bearer " + token}})
 	}
 
 	return parseResponse(accounts)

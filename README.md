@@ -1,4 +1,6 @@
-This CLI powered by [Cobra](https://github.com/spf13/cobra) aims to provide an easy way for you to take a peek on your investments in Coinbase and Crypto.com.
+# Investcli
+
+This CLI aims to provide an easy way for you to take a peek on your investments in Coinbase and Crypto.com.
 
 The only supported feature for now grabs all of your crypto tokens from those two exchanges, convert them to Canadian Dollars, and returns their weights in relation to the total wallet balance.
 

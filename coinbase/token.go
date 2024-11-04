@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"crypto/x509"
 	"encoding/pem"
+	"errors"
 	"fmt"
 	"investcli/utils"
 	"math"
@@ -26,7 +27,12 @@ type coingbaseApiKey struct {
 func buildJWT(uri string) (string, error) {
 	apiKey := utils.GetDataFromJson[coingbaseApiKey]("./secrets.json").ApiKeys
 
+	if apiKey.Key == "" || apiKey.PrivateKey == "" {
+		return "", errors.New("could not get Coinbase API keys")
+	}
+
 	block, _ := pem.Decode([]byte(apiKey.PrivateKey))
+
 	if block == nil {
 		return "", fmt.Errorf("jwt: Could not decode private key")
 	}

@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"investcli/utils"
 	"sort"
@@ -15,8 +16,12 @@ type cryptoDotComApiKey struct {
 	ApiKeys utils.ApiKeys `json:"cryptoDotCom"`
 }
 
-func signRequest(requestBody map[string]interface{}) string {
+func signRequest(requestBody map[string]interface{}) (string, error) {
 	apiKey := utils.GetDataFromJson[cryptoDotComApiKey]("./secrets.json").ApiKeys
+
+	if apiKey.Key == "" || apiKey.PrivateKey == "" {
+		return "", errors.New("could not get Crypto.com API keys")
+	}
 
 	id := requestBody["id"]
 	method := requestBody["method"].(string)
@@ -39,7 +44,7 @@ func signRequest(requestBody map[string]interface{}) string {
 		panic(err)
 	}
 
-	return string(jsonBody)
+	return string(jsonBody), nil
 }
 
 func arrayToString(arr []interface{}) string {

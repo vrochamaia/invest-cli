@@ -45,7 +45,7 @@ func Request(input RequestInput) string {
 	responseBody, error := io.ReadAll(response.Body)
 
 	if error != nil {
-		panic(fmt.Sprint("Failed to read the response: body ", error))
+		panic(fmt.Sprint("Failed to read the response: ", error))
 	}
 
 	if response.StatusCode != http.StatusOK {

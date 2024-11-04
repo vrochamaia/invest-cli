@@ -60,12 +60,18 @@ func Balances() []coin.Balance {
 		jsonFile, _ := os.ReadFile("./cryptodotcom-mock-data.json")
 		response = string(jsonFile)
 	} else {
-		requestBody := signRequest(map[string]interface{}{
+		requestBody, error := signRequest(map[string]interface{}{
 			"id":     10,
 			"method": "private/user-balance",
 			"params": map[string]interface{}{},
 			"nonce":  time.Now().UnixMilli(),
 		})
+
+		if error != nil {
+			fmt.Println("Error signing Crypto.com request: ", error)
+
+			return []coin.Balance{}
+		}
 
 		response = http.Request(http.RequestInput{
 			RequestHost:   "api.crypto.com",
