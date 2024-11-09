@@ -15,12 +15,14 @@ type Balance struct {
 func fetchDesiredWeights() map[string]float32 {
 	var desiredWeights map[string]float32
 
-	jsonFile, _ := os.ReadFile("./desired-wallet.json")
+	fileName := "desired-wallet.json"
+
+	jsonFile, _ := os.ReadFile(fileName)
 
 	error := json.Unmarshal([]byte(string(jsonFile)), &desiredWeights)
 
 	if error != nil {
-		panic(error)
+		fmt.Printf("Could not fetch desired wallet. This is expected if you didn't set up the %s file.\n", fileName)
 	}
 
 	return desiredWeights
