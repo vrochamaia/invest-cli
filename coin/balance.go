@@ -25,6 +25,13 @@ func fetchDesiredWeights() map[string]float32 {
 		fmt.Printf("Could not fetch desired wallet. This is expected if you didn't set up the %s file.\n", fileName)
 	}
 
+	weightsPercentageSum := 0.0
+	for _, value := range desiredWeights {
+		weightsPercentageSum += float64(value)
+	}
+
+	fmt.Printf("Weights Percentage Sum: %.2f\n\n", weightsPercentageSum)
+
 	return desiredWeights
 }
 
