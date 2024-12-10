@@ -37,7 +37,7 @@ func fetchDesiredWeights() map[string]float32 {
 
 func CalculateProportionAmongBalances(balances []Balance) {
 	accountsMap := make(map[string]float64)
-	CADTotalAmount := 0.0
+	totalBalance := 0.0
 
 	desiredWeights := fetchDesiredWeights()
 
@@ -46,25 +46,25 @@ func CalculateProportionAmongBalances(balances []Balance) {
 		currency := balance.Currency
 
 		if availableBalance > 0 {
-			CADAmount := coinconvert.CoinConvert(coinconvert.CoinConvertInput{FromCurrency: currency, ToCurrency: "CAD", Amount: availableBalance})
+			usdAmount := coinconvert.CoinConvert(coinconvert.CoinConvertInput{FromCurrency: currency, ToCurrency: "USD", Amount: availableBalance})
 
 			// The same crypto token can appear more than once in the array
-			accountsMap[currency] = accountsMap[currency] + CADAmount
+			accountsMap[currency] = accountsMap[currency] + usdAmount
 
-			CADTotalAmount += CADAmount
+			totalBalance += usdAmount
 		}
 	}
 
 	for key, value := range accountsMap {
-		currentWeight := value / CADTotalAmount * 100
+		currentWeight := value / totalBalance * 100
 		desiredWeight := desiredWeights[key]
 
 		desiredMinusCurrentWeight := float64(desiredWeight) - currentWeight
-		valueRequiredToBalance := (desiredMinusCurrentWeight * CADTotalAmount) / 100
+		valueRequiredToBalance := (desiredMinusCurrentWeight * totalBalance) / 100
 
 		fmt.Println(key, fmt.Sprintf("$ %.2f", value), "|", fmt.Sprintf("Current Weigth: %.2f", currentWeight), "%", "|", fmt.Sprintf("Desired weigth: %.2f", desiredWeight), "%", "|", fmt.Sprintf("Required value to ideal balance: $ %.2f", valueRequiredToBalance))
 		fmt.Println("")
 	}
 
-	fmt.Println("Total amount:", fmt.Sprintf("$ %.2f", CADTotalAmount))
+	fmt.Println("Total balance:", fmt.Sprintf("$ %.2f", totalBalance))
 }

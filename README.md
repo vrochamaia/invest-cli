@@ -96,6 +96,6 @@ investcli balances
 
 ## Disclaimers
 
-- The dollar values that you see printed out are all in Canadian dollars.
+- The dollar values that you see printed out are all in USD.
 - For brand new crypto tokens the [API](https://coinconvert.net/) that converts them to the fiat currency might take a couple weeks to be updated.
 - For the Golang experts, I know that I abused on the usage of `panic()` in this project. If this was a commercial or professional application I would have done things differently and handle those errors more elegantly.
