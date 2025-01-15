@@ -1,4 +1,4 @@
-package coin
+package wallet
 
 import (
 	"encoding/json"

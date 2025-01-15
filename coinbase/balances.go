@@ -3,9 +3,9 @@ package coinbase
 import (
 	"encoding/json"
 	"fmt"
-	"investcli/coin"
 	"investcli/http"
 	"investcli/utils"
+	"investcli/wallet"
 	"os"
 	"strconv"
 )
@@ -44,7 +44,7 @@ func authenticationToken(input authenticationTokenInput) (string, error) {
 	return jwtToken, error
 }
 
-func parseResponse(input string) []coin.Balance {
+func parseResponse(input string) []wallet.Balance {
 	var result CoinbaseAccounts
 
 	error := json.Unmarshal([]byte(input), &result)
@@ -53,18 +53,18 @@ func parseResponse(input string) []coin.Balance {
 		panic(error)
 	}
 
-	var coinBalances []coin.Balance
+	var coinBalances []wallet.Balance
 
 	for _, account := range result.Accounts {
 		parsedBalance, _ := strconv.ParseFloat(account.AvailableBalance.Value, 64)
 
-		coinBalances = append(coinBalances, coin.Balance{Currency: account.Currency, AvailableBalance: parsedBalance})
+		coinBalances = append(coinBalances, wallet.Balance{Currency: account.Currency, AvailableBalance: parsedBalance})
 	}
 
 	return coinBalances
 }
 
-func Balances() []coin.Balance {
+func Balances() []wallet.Balance {
 	if utils.IsTestEnv() {
 		fmt.Println("Using Coinbase mock data...")
 
@@ -81,7 +81,7 @@ func Balances() []coin.Balance {
 	if error != nil {
 		fmt.Println("Error while getting Coinbase authentication token: ", error)
 
-		return []coin.Balance{}
+		return []wallet.Balance{}
 	}
 
 	accounts := http.Request(http.RequestInput{RequestMethod: requestMethod, RequestHost: requestHost, RequestPath: requestPath, Headers: map[string]string{"Authorization": "Bearer " + token}})

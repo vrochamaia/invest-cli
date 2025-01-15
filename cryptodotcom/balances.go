@@ -3,9 +3,9 @@ package cryptodotcom
 import (
 	"encoding/json"
 	"fmt"
-	"investcli/coin"
 	"investcli/http"
 	"investcli/utils"
+	"investcli/wallet"
 	"os"
 	"strconv"
 	"time"
@@ -28,7 +28,7 @@ type CryptoDotComUserBalance struct {
 	Result UserBalanceResult `json:"result"`
 }
 
-func parseResponse(input string) []coin.Balance {
+func parseResponse(input string) []wallet.Balance {
 	var userBalance CryptoDotComUserBalance
 
 	error := json.Unmarshal([]byte(input), &userBalance)
@@ -37,7 +37,7 @@ func parseResponse(input string) []coin.Balance {
 		panic(error)
 	}
 
-	var coinBalances []coin.Balance
+	var coinBalances []wallet.Balance
 
 	// assuming user has only one master account
 	accountBalances := userBalance.Result.Data[0].Balances
@@ -45,13 +45,13 @@ func parseResponse(input string) []coin.Balance {
 	for _, accountBalance := range accountBalances {
 		parsedBalance, _ := strconv.ParseFloat(accountBalance.Balance, 64)
 
-		coinBalances = append(coinBalances, coin.Balance{Currency: accountBalance.Currency, AvailableBalance: parsedBalance})
+		coinBalances = append(coinBalances, wallet.Balance{Currency: accountBalance.Currency, AvailableBalance: parsedBalance})
 	}
 
 	return coinBalances
 }
 
-func Balances() []coin.Balance {
+func Balances() []wallet.Balance {
 	if utils.IsTestEnv() {
 		fmt.Println("Using Crypto.com mock data...")
 
@@ -70,7 +70,7 @@ func Balances() []coin.Balance {
 	if error != nil {
 		fmt.Println("Error signing Crypto.com request: ", error)
 
-		return []coin.Balance{}
+		return []wallet.Balance{}
 	}
 
 	response := http.Request(http.RequestInput{

@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"time"
 )
 
 type RequestInput struct {
@@ -32,7 +33,9 @@ func Request(input RequestInput) string {
 		request.Body = io.NopCloser(strings.NewReader(input.Body))
 	}
 
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
 
 	response, error := client.Do(request)
 
