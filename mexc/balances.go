@@ -6,6 +6,7 @@ import (
 	"investcli/http"
 	"investcli/utils"
 	"investcli/wallet"
+	"os"
 	"strconv"
 	"time"
 )
@@ -24,6 +25,14 @@ type MexcBalances struct {
 }
 
 func Balances() []wallet.Balance {
+	if utils.IsTestEnv() {
+		fmt.Println("Using Mexc mock data...")
+
+		jsonFile, _ := os.ReadFile("./mexc-mock-data.json")
+
+		return formatResponse(string(jsonFile))
+	}
+
 	apiKey := utils.GetDataFromJson[mexcApiKey]("./secrets.json").ApiKeys
 
 	if apiKey.Key == "" || apiKey.PrivateKey == "" {
