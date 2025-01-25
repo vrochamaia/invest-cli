@@ -52,7 +52,7 @@ func Request(input RequestInput) string {
 	}
 
 	if response.StatusCode != http.StatusOK {
-		panic(fmt.Sprintf("Failed to get response: %s. Response Body: %s", response.Status, responseBody))
+		panic(fmt.Sprintf("Failed to get response: %s. Response Body: %s. Request Host: %s", response.Status, responseBody, input.RequestHost))
 	}
 
 	return string(responseBody)

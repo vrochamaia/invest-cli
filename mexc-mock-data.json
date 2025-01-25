@@ -1,0 +1,34 @@
+{
+  "makerCommission": null,
+  "takerCommission": null,
+  "buyerCommission": null,
+  "sellerCommission": null,
+  "canTrade": true,
+  "canWithdraw": true,
+  "canDeposit": true,
+  "updateTime": null,
+  "accountType": "SPOT",
+  "balances": [
+    {
+      "asset": "USDT",
+      "free": "20",
+      "locked": "0"
+    },
+    {
+      "asset": "SOL",
+      "free": "12.34",
+      "locked": "0"
+    },
+    {
+      "asset": "BTC",
+      "free": "45.67",
+      "locked": "0"
+    },
+    {
+      "asset": "ETH",
+      "free": "9.54",
+      "locked": "0"
+    }
+  ],
+  "permissions": ["SPOT"]
+}

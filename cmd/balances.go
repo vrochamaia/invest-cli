@@ -3,6 +3,7 @@ package cmd
 import (
 	"investcli/coinbase"
 	"investcli/cryptodotcom"
+	"investcli/mexc"
 	"investcli/utils"
 	"investcli/wallet"
 
@@ -28,8 +29,12 @@ var balancesCommand = &cobra.Command{
 
 		coinbaseBalances := coinbase.Balances()
 		cryptoDotComBalances := cryptodotcom.Balances()
+		mexcBalances := mexc.Balances()
 
-		wallet.CalculateProportionAmongBalances(append(coinbaseBalances, cryptoDotComBalances...))
+		allBalances := append(coinbaseBalances, cryptoDotComBalances...)
+		allBalances = append(allBalances, mexcBalances...)
+
+		wallet.CalculateProportionAmongBalances(allBalances)
 	},
 }
 

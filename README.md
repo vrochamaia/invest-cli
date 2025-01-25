@@ -1,8 +1,8 @@
 # Investcli
 
-This CLI provides an easy way for you to take a peek on your investments in Coinbase and Crypto.com.
+This CLI provides an easy way for you to take a peek on your investments in Coinbase, Crypto.com, and Mexc.
 
-The only supported feature for now grabs all of your crypto tokens from those two exchanges, convert them to Canadian Dollars, and returns their weights in relation to the total wallet balance.
+The only supported feature for now grabs all of your crypto tokens from those two exchanges, convert them to US Dollars, and returns their weights in relation to the total wallet balance.
 
 ![Command Output Screenshot](./command-output.png)
 
@@ -16,7 +16,7 @@ git clone git@github.com:vrochamaia/invest-cli.git
 
 ### Configure the secrets file
 
-Go to the root of the repository and create a `secrets.json` file with your Coinbase and/or Crypto.com keys. **Never commit this file to a remote branch** since anyone with access to it can at least read your crypto positions on those exchanges.
+Go to the root of the repository and create a `secrets.json` file with your keys. **Never commit this file to a remote branch** since anyone with access to it can at least read your crypto positions on those exchanges.
 
 ```
 secrets.json
@@ -29,16 +29,17 @@ secrets.json
     "cryptoDotCom": {
         "key": "your public key"
         "privateKey": "your private key"
-    }
+    },
 }
 ```
 
 If you don't use one of the those exchanges you can just omit the respective object.
 
-You can find more details on how to generate those keys from the Coinbase and Crypto.com API docs.
+You can find more details on how to generate those keys in the respective Exchange API docs.
 
 - [Coinbase](https://docs.cdp.coinbase.com/coinbase-app/docs/quickstart)
 - [Crypto.com](https://exchange-docs.crypto.com/exchange/v1/rest-ws/index.html?javascript#generating-the-api-key)
+- [Mexc](https://mexcdevelop.github.io/apidocs/spot_v3_en/#introduction)
 
 ### Configure the desired wallet file (optional)
 
