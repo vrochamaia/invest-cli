@@ -19,7 +19,10 @@ func CoinConvert(input CoinConvertInput) float64 {
 		return 50
 	}
 
-	response := http.Request(http.RequestInput{RequestMethod: "GET", RequestHost: "api.coinconvert.net", RequestPath: fmt.Sprintf("/convert/%s/%s?amount=%s", input.FromCurrency, input.ToCurrency, strconv.FormatFloat(input.Amount, 'f', -1, 64))})
+	requestPath := fmt.Sprintf("/convert/%s/%s?amount=%s", input.FromCurrency, input.ToCurrency, strconv.FormatFloat(input.Amount, 'f', -1, 64))
+	requestHost := "api.coinconvert.net"
+
+	response := http.Request(http.RequestInput{RequestMethod: "GET", RequestHost: requestHost, RequestPath: requestPath})
 
 	var parsedResponse map[string]interface{}
 
