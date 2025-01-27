@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"investcli/coinconvert"
 	"os"
+	"sort"
 )
 
 type Balance struct {
@@ -55,7 +56,16 @@ func CalculateProportionAmongBalances(balances []Balance) {
 		}
 	}
 
-	for key, value := range accountsMap {
+	keys := make([]string, 0, len(accountsMap))
+
+	for key := range accountsMap {
+		keys = append(keys, key)
+	}
+
+	sort.Strings(keys)
+
+	for _, key := range keys {
+		value := accountsMap[key]
 		currentWeight := value / totalBalance * 100
 		desiredWeight := desiredWeights[key]
 
